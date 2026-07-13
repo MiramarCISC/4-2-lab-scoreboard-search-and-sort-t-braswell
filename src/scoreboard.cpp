@@ -26,8 +26,8 @@ int findLowest(const int scores[], int size) {
   if (scores==nullptr or size < 1){
       return 0.0; }
     int minVal=scores[0];
-    for (int i = 0; i < size; ++i) {
-      if (scores[i]<= minVal) {
+    for (int i = 0; i < size ; ++i) {
+      if (scores[i]<  minVal) {
 	minVal=scores[i];
       }
     }
@@ -51,18 +51,15 @@ int findHighest(const int scores[], int size) {
 }
 
 int findScore(const int scores[], int size, int target) {
-    // TODO:
-    // Search the array from left to right.
-    // Return the index where target is found.
-    // Return -1 when target is not found.
-  int index=-1;
-  for ( int i = 0; i < size; ++i) {
-    if (scores[i]==target) {
-      index=i;
-      
+
+  if (scores==nullptr or size < 1){
+      return -1; }
+  for (int i = 0; i < size; ++i) {
+    if (scores[i] == target) {
+      return i;     
     }
   }
-  return index;
+  return -1;
 }
 
 void sortScores(int scores[], int size) {
