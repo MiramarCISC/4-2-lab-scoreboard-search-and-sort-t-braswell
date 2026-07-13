@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic -Iinclude
+CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic -Iinclude -g 
 
 APP_TARGET = main
 TEST_TARGET = test_scoreboard
