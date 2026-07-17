@@ -1,41 +1,41 @@
-#include "scoreboard.hpp"
+#include "grade_analyzer.hpp"
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
-int main() {
-    int scores[DEFAULT_SCORE_COUNT] = {25, 10, 30, 15, 40};
-    int target = 0;
+// Reads and validates one score to avoid repeating the same input logic.
+double readValidScore(int scoreNumber) {
+    double score = 0.0;
 
-    cout << "Scoreboard Analyzer" << endl;
-    cout << endl;
+    cout << "Enter score " << scoreNumber << ": ";
 
-    cout << "Original scores:" << endl;
-    printScores(scores, DEFAULT_SCORE_COUNT);
-    cout << endl;
+    // Also checks for non-numeric input, such as letters.
+    while (!(cin >> score) || !isValidScore(score)) {
+        cout << "Invalid score. Enter a number from 0 to 100: ";
 
-    cout << "Total: " << calculateTotal(scores, DEFAULT_SCORE_COUNT) << endl;
-    cout << "Average: " << calculateAverage(scores, DEFAULT_SCORE_COUNT) << endl;
-    cout << "Lowest: " << findLowest(scores, DEFAULT_SCORE_COUNT) << endl;
-    cout << "Highest: " << findHighest(scores, DEFAULT_SCORE_COUNT) << endl;
-    cout << endl;
-
-    cout << "Enter score to search for: ";
-    cin >> target;
-
-    int index = findScore(scores, DEFAULT_SCORE_COUNT, target);
-
-    if (index == -1) {
-        cout << "Score not found." << endl;
-    } else {
-        cout << "Score found at index " << index << endl;
+        cin.clear(); // Clears cin's error state.
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Removes invalid input.
     }
 
-    cout << endl;
-    sortScores(scores, DEFAULT_SCORE_COUNT);
+    return score;
+}
 
-    cout << "Sorted scores:" << endl;
-    printScores(scores, DEFAULT_SCORE_COUNT);
+int main() {
+    cout << "Grade Analyzer" << endl;
+    cout << endl;
+
+    // Use the helper function to reduce repeated input and validation code.
+    double score1 = readValidScore(1);
+    double score2 = readValidScore(2);
+    double score3 = readValidScore(3);
+
+    double total = calculateTotal(score1, score2, score3);
+    double average = calculateAverage(total, SCORE_COUNT);
+    char letterGrade = determineLetterGrade(average);
+    bool passing = isPassing(average);
+
+    printGradeReport(total, average, letterGrade, passing);
 
     return 0;
 }
